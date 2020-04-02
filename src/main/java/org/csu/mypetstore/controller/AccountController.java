@@ -19,8 +19,8 @@ import java.util.List;
 @SessionAttributes({"account","myList","authenticated"})
 public class AccountController {
 
-//    @Autowired
-//    private AccountService accountService;
+    @Autowired
+    private AccountService accountService;
 
     @Autowired
     private CatalogService catalogService;
