@@ -24,4 +24,4 @@ class MypetstoreApplicationTests {
         System.out.println(catelogService.getCategory("BIRDS").getName());
     }
 
-}
+}//111
