@@ -171,5 +171,21 @@ public class Account implements Serializable {
         this.bannerName = bannerName;
     }
 
+    public String toString() {
+        return
+                this.username +
+                        this.password +
+                        this.email +
+                        this.firstName +
+                        this.lastName +
+                        this.status +
+                        this.address1 +
+                        this.address2 +
+                        this.city +
+                        this.state +
+                        this.zip +
+                        this.country +
+                        this.phone;
+    }
 }
 
