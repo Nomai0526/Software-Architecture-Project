@@ -49,13 +49,30 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
-
+    <pluginRepositories>
+        <pluginRepository>
+            <id>alimaven spring plugin</id>
+            <name>alimaven spring plugin</name>
+            <url>https://maven.aliyun.com/repository/spring-plugin</url>
+        </pluginRepository>
+    </pluginRepositories>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!--fork:如果没有该项配置,整个devtools不会起作用-->
+                    <fork>true</fork>
+                    <addResources>true</addResources><!--支持静态文件热部署-->
+                </configuration>
+                <version>2.2.5.RELEASE</version>
             </plugin>
         </plugins>
     </build>
