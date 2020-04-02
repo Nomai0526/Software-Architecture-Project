@@ -51,7 +51,7 @@ public class AccountController {
         return "account/NewAccountForm";
     }
     @PostMapping("register")
-    public void register(String userId,String password,String firstName,String lastName,String email,String phone,String addr1,String addr2,String city,String state,String zip,String country,Model model)
+    public String register(String userId,String password,String firstName,String lastName,String email,String phone,String addr1,String addr2,String city,String state,String zip,String country,Model model)
     {
         Account account = new Account();
         account.setUsername(userId);
@@ -68,6 +68,7 @@ public class AccountController {
         account.setCountry(country);
         System.out.println(account.toString());
         accountService.insertAccount(account);
+        return "catalog/main";
     }
 
 }
