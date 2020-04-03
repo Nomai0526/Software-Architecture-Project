@@ -66,8 +66,21 @@ public class AccountController {
         account.setState(state);
         account.setZip(zip);
         account.setCountry(country);
-        System.out.println(account.toString());
         accountService.insertAccount(account);
+        boolean authenticated = true;
+        List<Product> myList =catalogService.getProductListByCategory(account.getFavouriteCategoryId());
+        model.addAttribute("account",account);
+        model.addAttribute("myList",myList);
+        model.addAttribute("authenticated",authenticated);
+
+        return "catalog/main";
+    }
+    @GetMapping("signOut")
+    public String signOut(Model model)
+    {
+        model.addAttribute("account",null);
+        model.addAttribute("myList",null);
+        model.addAttribute("authenticated",false);
         return "catalog/main";
     }
 
