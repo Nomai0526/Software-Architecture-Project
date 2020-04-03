@@ -7,39 +7,40 @@
 </head>
 <body>
 <header th:replace="common/top"></header>
+<div id="Content">
+    <div id="Catalog">
 
-<div id="Catalog">
-
-    <h3>User Information</h3>
-    <form action="account/editAccount" method="post">
-        <table id="table">
-            <tr>
-                <td>User ID:</td>
-                <td>${sessionScope.account.userId}</td>
-            </tr>
-            <tr>
-                <td>New password*:</td>
-                <td><input type="password" id="password" name="password" required="required"/></td>
-            </tr>
-            <tr>
-                <td>Repeat password*:</td>
-                <td><input type="password" id="repeatedPassword" name="repeatedPassword" required="required"
-                           onkeyup="checkPassword()"/></td>
-            </tr>
-            <tr style="color: red;display: none" id="passwordError">
-                <td colspan=2>
-                    Two password are not same
-                </td>
-            </tr>
-        </table>
+        <h3>User Information</h3>
+        <form action="account/editAccount" method="post">
+            <table id="table">
+                <tr>
+                    <td>User ID:</td>
+                    <td th:text="${session.account.username}">userId</td>
+                </tr>
+                <tr>
+                    <td>New password*:</td>
+                    <td><input type="password" id="password" name="password" required="required"/></td>
+                </tr>
+                <tr>
+                    <td>Repeat password*:</td>
+                    <td><input type="password" id="repeatedPassword" name="repeatedPassword" required="required"
+                               onkeyup="checkPassword()"/></td>
+                </tr>
+                <tr style="color: red;display: none" id="passwordError">
+                    <td colspan=2>
+                        Two password are not same
+                    </td>
+                </tr>
+            </table>
             <div style="color:#fe0000" th:if="${param.faliure!=null}">Two passwords must be same</div>
-        <div th:replace="account/IncludeAccountFields"></div>
-        <div style="color:#fe0000">Fields marked with * are required</div>
-        <input type="submit" name="editAccount" value="Save Account Information"/><br/>
-        <input type="text" onkeyup="">
+            <div th:replace="account/IncludeAccountFields"></div>
+            <div style="color:#fe0000">Fields marked with * are required</div>
+            <input type="submit" name="editAccount" value="Save Account Information"/><br/>
+            <input type="text" onkeyup="">
 
-        <a href="myOrders">My Orders</a>
-    </form>
+            <a href="myOrders">My Orders</a>
+        </form>
+    </div>
 </div>
 <script>
     function checkPassword() {

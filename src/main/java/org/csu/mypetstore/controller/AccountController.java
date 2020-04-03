@@ -83,6 +83,11 @@ public class AccountController {
         model.addAttribute("authenticated",false);
         return "catalog/main";
     }
+    @GetMapping("myAccountPage")
+    public String myAccountPage()
+    {
+        return "account/EditAccountForm";
+    }
     @PostMapping("editAccount")
     public String editAccountString (String userId,String password,String firstName,String lastName,String email,String phone,String addr1,String addr2,String city,String state,String zip,String country,Model model)
     {

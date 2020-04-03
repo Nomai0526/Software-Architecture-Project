@@ -22,7 +22,7 @@
                     <a th:if="(${session.account} != null) and (${!session.authenticated}) " href="/account/signonForm">Sign In</a>
                     <a th:if="(${session.account} != null) and (${session.authenticated})" href="/account/signOut">Sign Out</a>
                     <img th:if="(${session.account} != null) and (${session.authenticated})" align="middle" src="../images/separator.gif" />
-                    <a th:if="(${session.account} != null) and (${session.authenticated})" href="#">My Account</a>
+                    <a th:if="(${session.account} != null) and (${session.authenticated})" href="/account/myAccountPage">My Account</a>
                     <img align="middle" src="../images/separator.gif" />
                     <a href="/help">?</a>
                 </div>
