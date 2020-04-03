@@ -83,5 +83,29 @@ public class AccountController {
         model.addAttribute("authenticated",false);
         return "catalog/main";
     }
+    @PostMapping("editAccount")
+    public String editAccountString (String userId,String password,String firstName,String lastName,String email,String phone,String addr1,String addr2,String city,String state,String zip,String country,Model model)
+    {
+        Account account = new Account();
+        account.setUsername(userId);
+        account.setPassword(password);
+        account.setFirstName(firstName);
+        account.setLastName(lastName);
+        account.setEmail(email);
+        account.setPhone(phone);
+        account.setAddress1(addr1);
+        account.setAddress2(addr2);
+        account.setCity(city);
+        account.setState(state);
+        account.setZip(zip);
+        account.setCountry(country);
+        accountService.updateAccount(account);
+        boolean authenticated = true;
+        List<Product> myList =catalogService.getProductListByCategory(account.getFavouriteCategoryId());
+        model.addAttribute("account",account);
+        model.addAttribute("myList",myList);
+        model.addAttribute("authenticated",authenticated);
+        return "catalog/main";
+    }
 
 }

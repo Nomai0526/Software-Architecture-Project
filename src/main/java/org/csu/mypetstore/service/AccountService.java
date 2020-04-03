@@ -35,7 +35,7 @@ public class AccountService {
 
     public void updateAccount(Account account){
         accountMapper.updateAccount(account);
-        accountMapper.updateProfile(account);
+//        accountMapper.updateProfile(account);
 
         if(account.getPassword() != null && account.getPassword().length() > 0){
             accountMapper.updateSignon(account);
