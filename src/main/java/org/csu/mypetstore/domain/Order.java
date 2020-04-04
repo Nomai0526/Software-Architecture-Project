@@ -229,4 +229,5 @@ public class Order {
     public void setLocale(String locale) {
         this.locale = locale;
     }
+
 }

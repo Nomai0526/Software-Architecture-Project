@@ -4,7 +4,10 @@ import com.sun.org.apache.xpath.internal.operations.Or;
 import org.csu.mypetstore.domain.Account;
 import org.csu.mypetstore.domain.Cart;
 import org.csu.mypetstore.domain.Order;
+import org.csu.mypetstore.service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,10 +18,14 @@ import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("order/")
 public class OrderController {
+
+    @Autowired
+    OrderService orderService;
 
     @GetMapping("newOrder")
     public String newOrder(Model model)
@@ -67,6 +74,7 @@ public class OrderController {
         session.setAttribute("order",order);
         if(shipToDiff==null)
         {
+            orderService.insertOrder(order);
             return "order/view_order";
         }
         else
@@ -87,6 +95,16 @@ public class OrderController {
         order.setShipCountry((String)request.getParameter("shipCountry"));
         order.setShipToFirstname((String)request.getParameter("shipFirstName"));
         order.setShipToLastname((String)request.getParameter("shipLastName"));
+        orderService.insertOrder(order);
         return "order/view_order";
+    }
+    @GetMapping("orderLists")
+    public String myOrders(HttpServletRequest request,Model model)
+    {
+
+        List<Order> orderList = orderService.getOrdersByUsername(((Account)(request.getSession().getAttribute("account"))).getUsername());
+        //从httpsession中获取用户名，并查询订单列表
+        model.addAttribute("orderList",orderList);
+        return "order/order_lists";
     }
 }
