@@ -1,63 +1,64 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
-	<title>Title</title>
-	<link rel="StyleSheet" href="../css/jpetstore.css" type="text/css" media="screen"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="StyleSheet" href="../css/jpetstore.css" type="text/css" media="screen"/>
 </head>
 <head>
-	<meta charset="UTF-8">
-	<title>Help</title>
+    <meta charset="UTF-8">
+    <title>Help</title>
 </head>
 <body>
 <header th:replace="common/top"></header>
+<div id="Content">
+    <div id="Catalog">
+        <form action="/order/confirmOrder" method="post">
+            <table>
+                <tr>
+                    <th colspan=2>Shipping Address</th>
+                </tr>
 
-<div id="Catalog">
-	<form action="confirmOrder" method="post">
-	<table>
-		<tr>
-			<th colspan=2>Shipping Address</th>
-		</tr>
-
-		<tr>
-			<td>First name*:</td>
-			<td><input type="text" name="shipFirstName" required="required" /></td>
-		</tr>
-		<tr>
-			<td>Last name*:</td>
-			<td><input type="text" name="shipLastName" required="required" /></td>
-		</tr>
-		<tr>
-			<td>Address 1*:</td>
-			<td><input type="text" name="shipAddr1" required="required" /></td>
-		</tr>
-		<tr>
-			<td>Address 2:</td>
-			<td><input type="text" name="shipAddr2" /></td>
-		</tr>
-		<tr>
-			<td>City*:</td>
-			<td><input type="text" name="shipCity" required="required" /></td>
-		</tr>
-		<tr>
-			<td>State*:</td>
-			<td><input type="text" name="shipState" required="required" /></td>
-		</tr>
-		<tr>
-			<td>Zip*:</td>
-			<td><input type="text" name="shipZip" required="required" /></td>
-		</tr>
-		<tr>
-			<td>Country*:</td>
-			<td><input type="text" name="shipCountry" required="required" /></td>
-		</tr>
+                <tr>
+                    <td>First name*:</td>
+                    <td><input type="text" name="shipFirstName" required="required"/></td>
+                </tr>
+                <tr>
+                    <td>Last name*:</td>
+                    <td><input type="text" name="shipLastName" required="required"/></td>
+                </tr>
+                <tr>
+                    <td>Address 1*:</td>
+                    <td><input type="text" name="shipAddr1" required="required"/></td>
+                </tr>
+                <tr>
+                    <td>Address 2:</td>
+                    <td><input type="text" name="shipAddr2"/></td>
+                </tr>
+                <tr>
+                    <td>City*:</td>
+                    <td><input type="text" name="shipCity" required="required"/></td>
+                </tr>
+                <tr>
+                    <td>State*:</td>
+                    <td><input type="text" name="shipState" required="required"/></td>
+                </tr>
+                <tr>
+                    <td>Zip*:</td>
+                    <td><input type="text" name="shipZip" required="required"/></td>
+                </tr>
+                <tr>
+                    <td>Country*:</td>
+                    <td><input type="text" name="shipCountry" required="required"/></td>
+                </tr>
 
 
-	</table>
+            </table>
 
-	<input type="submit" value="ConFirm" />
+            <input type="submit" value="ConFirm"/>
 
-	</form>
+        </form>
+    </div>
 </div>
 
 <footer th:replace="common/bottom"></footer>
