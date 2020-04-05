@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 
 @Controller
@@ -28,14 +29,16 @@ public class OrderController {
     OrderService orderService;
 
     @GetMapping("newOrder")
-    public String newOrder(Model model)
+    public String newOrder(HttpServletRequest request,Model model)
     {
         ArrayList<String> cardTypeList = new ArrayList<String>();
         cardTypeList.add("Type 1");
         cardTypeList.add("Type 2");
         cardTypeList.add("Type 3");
         model.addAttribute("cardTypeList",cardTypeList);
-        return "order/new_order_form";
+        if(request.getSession().getAttribute("account")==null)
+            return "account/signon";
+        else return "order/new_order_form";
     }
     @PostMapping("shippingForm")
     public String shippingForm(HttpServletRequest request, String shipToDiff)
@@ -54,8 +57,8 @@ public class OrderController {
         order.setBillState((String) request.getParameter("billState"));
         order.setBillZip((String) request.getParameter("billZip"));
         order.setBillCountry((String) request.getParameter("billCountry"));
-//        order.setTotalPrice(((Cart) session.getAttribute("cart")).getSubTotal());
-        order.setTotalPrice(new BigDecimal(1000));
+        order.setTotalPrice(((Cart) session.getAttribute("cart")).getSubTotal());
+//        order.setTotalPrice(new BigDecimal(1000));
         order.setBillToFirstName((String) request.getParameter("billFirstName"));
         order.setBillToLastname((String) request.getParameter("billLastName"));
         order.setCreditCard((String) request.getParameter("cardNumber"));
@@ -106,5 +109,14 @@ public class OrderController {
         //从httpsession中获取用户名，并查询订单列表
         model.addAttribute("orderList",orderList);
         return "order/order_lists";
+    }
+    @GetMapping("viewOrder")
+    public String viewOrder(HttpServletRequest request,Model model)
+    {
+        Order order = orderService.getOrder(Integer.parseInt(request.getParameter("orderId")));
+        request.getSession().setAttribute("order",order);
+//        model.addAttribute("order",order); //这里不知道为啥用model不行了
+        System.out.println(((Order)(request.getSession().getAttribute("order"))).getOrderId());
+        return "order/view_order";
     }
 }

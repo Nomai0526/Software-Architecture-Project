@@ -18,11 +18,11 @@ public class OrderService {
     public void insertOrder(Order order) {
         orderMapper.insertOrder(order);
     }
-//
-//    public Order getOrder(int orderId) {
-//        return orderDao.getOrder(orderId);
-//    }
-//
+
+    public Order getOrder(int orderId) {
+        return orderMapper.getOrder(orderId);
+    }
+
     public List<Order> getOrdersByUsername(String username) {
         return orderMapper.getOrdersByUsername(username);
     }

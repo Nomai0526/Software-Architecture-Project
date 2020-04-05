@@ -8,8 +8,8 @@
         VALUES
          (#{userId},#{orderDate},#{shipAddr1},#{shipAddr2},#{shipCity},#{shipState},#{shipZip},#{shipCountry},#{billAddr1},#{billAddr2},#{billCity},#{billState},#{billZip},#{billCountry},#{courier},#{totalPrice},#{billToFirstName},#{billToLastname},#{shipToFirstname},#{shipToLastname},#{creditCard},#{exprdate},#{cardType},#{locale})
     </insert>
-    <select id="getOrder" resultType="Order">
-
+    <select id="getOrder" parameterType="int" resultType="Order">
+        SELECT * FROM ORDERS WHERE ORDERID = #{orderId}
     </select>
     <select id="getOrdersByUsername" parameterType="String" resultType="Order">
     SELECT * FROM ORDERS WHERE USERID = #{username}
