@@ -3,7 +3,9 @@ package org.csu.mypetstore.controller;
 import com.sun.org.apache.xpath.internal.operations.Or;
 import org.csu.mypetstore.domain.Account;
 import org.csu.mypetstore.domain.Cart;
+import org.csu.mypetstore.domain.CartItem;
 import org.csu.mypetstore.domain.Order;
+import org.csu.mypetstore.service.CatalogService;
 import org.csu.mypetstore.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("order/")
@@ -27,10 +26,35 @@ public class OrderController {
 
     @Autowired
     OrderService orderService;
+    @Autowired
+    CatalogService catalogService;
 
     @GetMapping("newOrder")
     public String newOrder(HttpServletRequest request,Model model)
     {
+        Cart cart = (Cart) (request.getSession().getAttribute("cart"));
+        Iterator<CartItem> cartItems = cart.getAllCartItems();
+        boolean outStock = false;
+        //用于标记是否出超出库存的临时变量
+        while (cartItems.hasNext()){
+            CartItem cartItem = cartItems.next();
+            String itemId = cartItem.getItem().getItemId();
+            System.out.println(itemId);
+            int quantity = cartItem.getQuantity();
+            if(quantity>catalogService.getInventoryById(cartItem.getItem().getItemId()))
+            {
+                cartItem.setInStock(false);
+                outStock = true;
+            }
+        }
+        if(outStock)
+        {
+            return "cart/updateCartQuantities";
+            //若果下单时大于库存数量，则返回本页面
+        }
+
+        //在提交订单时对于商品的库存再做一次验证，以免有其他人在中间的时间下订单导致库存数量不足
+
         ArrayList<String> cardTypeList = new ArrayList<String>();
         cardTypeList.add("Type 1");
         cardTypeList.add("Type 2");
@@ -43,7 +67,6 @@ public class OrderController {
     @PostMapping("shippingForm")
     public String shippingForm(HttpServletRequest request, String shipToDiff)
     {
-
         //用了比较古典的写法
         HttpSession session = request.getSession();
         Order order = new Order();
@@ -58,7 +81,6 @@ public class OrderController {
         order.setBillZip((String) request.getParameter("billZip"));
         order.setBillCountry((String) request.getParameter("billCountry"));
         order.setTotalPrice(((Cart) session.getAttribute("cart")).getSubTotal());
-//        order.setTotalPrice(new BigDecimal(1000));
         order.setBillToFirstName((String) request.getParameter("billFirstName"));
         order.setBillToLastname((String) request.getParameter("billLastName"));
         order.setCreditCard((String) request.getParameter("cardNumber"));
@@ -89,7 +111,6 @@ public class OrderController {
     public String confirmOrder(HttpServletRequest request,Model model)
     {
         Order order = (Order)(request.getSession().getAttribute("order"));
-        System.out.println(order);
         order.setShipAddr1((String)request.getParameter("shipAddr1"));
         order.setShipAddr2((String)request.getParameter("shipAddr2"));
         order.setShipCity((String)request.getParameter("shipCity"));

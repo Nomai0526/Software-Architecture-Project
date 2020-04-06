@@ -24,6 +24,8 @@
                     <th>Product ID</th>
                     <th>Description</th>
                     <th>List Price</th>
+                    <th>Inventory</th>
+<!--                    库存数量-->
                     <th>&nbsp;</th>
                 </tr>
 
@@ -33,8 +35,8 @@
                     <td th:text="${item.attribute1}">
                         Item Attributes
                     </td>
-<!--                    <td th:text="${item.listPrice}">Item List Price</td>-->
                     <td th:text="'$'+${#numbers.formatDecimal(item.listPrice,1,2)}">Item List Price</td>
+                    <td th:text="${item.inventory}"> in Stock</td>
                     <td><a th:href="'/cart/addItemToCart?workingItemId='+${item.itemId}">Add to Cart</a></td>
                 </tr>
             </table>

@@ -9,7 +9,11 @@ import java.util.Map;
 @Repository
 public interface ItemMapper {
 
-    void updateInventoryQuantity(Map<String, Object> param);
+    void decreaseInventoryQuantity(Map<String, Object> param);
+
+    void increaseInventoryQuantity(Map<String, Object> param);
+
+    //将更改库存函数拆分成了两个
 
     int getInventoryQuantity(String itemId);
 

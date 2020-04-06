@@ -25,6 +25,7 @@
                     <th><b>Quantity</b></th>
                     <th><b>List Price</b></th>
                     <th><b>Total Cost</b></th>
+                    <th><b>Inventory</b></th>
                     <th>&nbsp;</th>
                 </tr>
                 <tr th:if="${cart.numberOfItems == 0}">
@@ -43,6 +44,8 @@
                     </td>
                     <td th:text="'$'+${#numbers.formatDecimal(cartItem.item.listPrice,1,2)}"></td>
                     <td th:text="'$'+${#numbers.formatDecimal(cartItem.total,1,2)}"></td>
+                    <td th:text="${cartItem.item.inventory}"></td>
+                    <td th:if="${!cartItem.inStock}" style="color: red">Inventory shortage!</td>
                     <td>
                         <a class="Button" th:href="'/cart/removeItemFromCart?workingItemId='+${cartItem.item.itemId}">Remove</a>
                     </td>

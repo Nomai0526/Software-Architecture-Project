@@ -41,16 +41,29 @@ public class CatalogService {
         return productMapper.searchProductList("%" + keyword.toLowerCase() + "%");
     }
 
-    public List<Item> getItemListByProduct(String productId){
-        return itemMapper.getItemListByProduct(productId);
+    public List<Item> getItemListByProduct(String productId)
+    {
+        List<Item> list = itemMapper.getItemListByProduct(productId);
+        for (Item item:list
+             ) {
+            item.setInventory(itemMapper.getInventoryQuantity(item.getItemId()));
+        }
+        //将数量添加到项目中
+        return list;
     }
 
     public Item getItem(String itemId){
-        return itemMapper.getItem(itemId);
+        Item item = itemMapper.getItem(itemId);
+        item.setInventory(itemMapper.getInventoryQuantity(item.getItemId()));
+        return item;
     }
 
     public boolean isItemInStock(String itemId){
         return itemMapper.getInventoryQuantity(itemId) > 0;
     }
 
+    public int getInventoryById(String itemId)
+    {
+        return itemMapper.getInventoryQuantity(itemId);
+    }
 }

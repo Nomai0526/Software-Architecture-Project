@@ -2,6 +2,7 @@ package org.csu.mypetstore.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class Order {
     private int orderId;
@@ -29,6 +30,7 @@ public class Order {
     private String exprdate;
     private String cardType;
     private String locale;
+    private List<CartItem> cartItemList;
 
     public int getOrderId() {
         return orderId;

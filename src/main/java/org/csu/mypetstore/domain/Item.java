@@ -20,6 +20,15 @@ public class Item implements Serializable {
     private String attribute5;
     private Product product;
     private int quantity;
+    private int inventory;
+
+    public int getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(int inventory) {
+        this.inventory = inventory;
+    }
 
     public String getItemId() {
         return itemId;

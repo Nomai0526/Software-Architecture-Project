@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.annotation.SessionScope;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 @Controller
 @SessionScope
 @RequestMapping("/cart/")
-@SessionAttributes("cart")
+@SessionAttributes({"cart","outStock"}) //后者作为是否脱销的信息载体，是一个数组
 public class CartController {
 
     @Autowired
@@ -64,13 +66,19 @@ public class CartController {
             String itemId = cartItem.getItem().getItemId();
             try{
                 int quantity = Integer.parseInt(request.getParameter(itemId));
-                cart.setQuantityByItemId(itemId,quantity);
-                if(quantity < 1){
-                    cartItems.remove();
+                if(quantity<=catalogService.getInventoryById(cartItem.getItem().getItemId()))
+                {
+                    cart.setQuantityByItemId(itemId, quantity);
+                    cartItem.setInStock(true);
+                    //这个是为后面的完成订单设计的
+                    if (quantity < 1) {
+                        cartItems.remove();
+                    }
                 }
-            }catch (Exception e){
-
-            }
+                else {
+                    cartItem.setInStock(false);
+                }
+            }catch (Exception e){}
         }
         model.addAttribute("cart",cart);
         return "cart/cart";
