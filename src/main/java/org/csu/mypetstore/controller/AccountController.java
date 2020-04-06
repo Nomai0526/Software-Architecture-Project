@@ -4,11 +4,15 @@ import org.csu.mypetstore.domain.Account;
 import org.csu.mypetstore.domain.Product;
 import org.csu.mypetstore.service.AccountService;
 import org.csu.mypetstore.service.CatalogService;
+import org.csu.mypetstore.service.VerificationCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -22,14 +26,21 @@ public class AccountController {
     @Autowired
     private CatalogService catalogService;
 
+    @Autowired
+    private VerificationCodeService verificationCodeService;
+
     @GetMapping("signonForm")
     public String signonForm(){
         return "account/signon";
     }
 
     @PostMapping("signon")
-    public String signon(String username, String password, Model model){
+    public String signon(String username, String password, Model model, HttpServletRequest request){
         Account loginAccount = accountService.getAccount(username,password);
+
+        if(!verificationCodeService.check(request.getSession(),request.getParameter("checkCode")))
+        return "account/signon";
+        //验证验证码，如果错误则返回带参数的登陆页面
 
         if(loginAccount == null){
             String msg = "Invalid username or password.  Signon failed.";

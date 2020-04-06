@@ -4,9 +4,20 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="StyleSheet" href="../css/jpetstore.css" type="text/css" media="screen"/>
+    <script src="/js/jquery-3.4.1.min.js">
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#anotherOne").click(function(){
+                $("#image").attr("src","/verify/getVerify?"+new Date().getTime());
+                //通过时间戳来刷新图片
+            });
+        });
+    </script>
 </head>
 <body>
-<header th:replace="common/top"></header>
+<header th:replace="common/top">
+</header>
 <div id="Content">
     <div id="Catalog">
         <form action="/account/signon" method="post">
@@ -16,13 +27,20 @@
                 Password:<input type="password" name="password">
             </p>
             <p th:if="${msg!=null}" th:text="${msg}"></p>
+            VerificationCode:<input type="text" name="checkCode" id="checkcode"/>
+            <img src="/verify/getVerify" alt="VerificationCode" id="image"/>
+            <a id="anotherOne"><label>Another One</label></a><br>
+            <div style="color:#fe0000" th:if="${param.verifyFailure!=null}">Verification code error</div>
+            <br>
             <input type="submit" value="Login">
+
         </form>
 
         Need a user name and password?
         <a href="/account/registerPage">Register Now!</a>
     </div>
 </div>
+
 <footer th:replace="common/bottom"></footer>
 </body>
 </html>
