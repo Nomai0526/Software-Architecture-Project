@@ -72,8 +72,6 @@ public class VerificationCodeService {
     public boolean check(HttpSession session,String code)
     {
         String answer = (String) session.getAttribute("verificationCode");
-        System.out.println(answer);
-        System.out.println(code);
         answer.equals("111");
         if (answer.equals(code))
         {

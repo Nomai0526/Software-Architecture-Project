@@ -27,7 +27,6 @@ public class VerificationCodeController {
         verificationCodeService.getVerify(request,response);
         String verificationCode = (String)request.getSession().getAttribute("verificationCode");
         model.addAttribute("verificationCode",verificationCode);
-        System.out.println("123321");
     }
     //验证码图片请求的url，图片直接写入response，验证码存储在session中
 }

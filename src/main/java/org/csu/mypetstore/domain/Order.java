@@ -2,6 +2,7 @@ package org.csu.mypetstore.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public class Order {
@@ -31,6 +32,18 @@ public class Order {
     private String cardType;
     private String locale;
     private List<CartItem> cartItemList;
+
+    public List<CartItem> getCartItemList() {
+        return cartItemList;
+    }
+
+    public Iterator<CartItem> getCartItems() {
+        return cartItemList.iterator();
+    }
+
+    public void setCartItemList(List<CartItem> cartItemList) {
+        this.cartItemList = cartItemList;
+    }
 
     public int getOrderId() {
         return orderId;

@@ -32,7 +32,7 @@
                     <td colspan="8"><b>Your cart is empty.</b></td>
                 </tr>
 
-                <tr th:each="cartItem:${cart.cartItems}">
+                <tr th:each="cartItem:${session.cart.cartItems}">
                     <td>
                         <a th:href="'/catalog/viewItem?itemId='+${cartItem.item.itemId}" th:text="${cartItem.item.itemId}"></a>
                     </td>

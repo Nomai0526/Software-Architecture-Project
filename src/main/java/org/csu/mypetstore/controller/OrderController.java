@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,6 +23,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("order/")
+@SessionAttributes({"cart","order"})
 public class OrderController {
 
     @Autowired
@@ -65,7 +67,7 @@ public class OrderController {
         else return "order/new_order_form";
     }
     @PostMapping("shippingForm")
-    public String shippingForm(HttpServletRequest request, String shipToDiff)
+    public String shippingForm(HttpServletRequest request, String shipToDiff,Model model)
     {
         //用了比较古典的写法
         HttpSession session = request.getSession();
@@ -99,7 +101,20 @@ public class OrderController {
         session.setAttribute("order",order);
         if(shipToDiff==null)
         {
+            Cart cart = (Cart) (request.getSession().getAttribute("cart"));
+
+            List<CartItem> cartItems = new ArrayList<CartItem>();
+            for (CartItem cartItem:cart.getCartItemList()
+                 ) {
+                cartItems.add(cartItem);
+            }
+            //这里如果不深拷贝的话会导致清空购物车时将订单内容一并清空，因此手动实现一下深拷贝
+
+            order.setCartItemList(cartItems);
+            model.addAttribute("order",order);
+            session.setAttribute("order",order);
             orderService.insertOrder(order);
+            cart.clear();//清空购物车
             return "order/view_order";
         }
         else
@@ -119,7 +134,20 @@ public class OrderController {
         order.setShipCountry((String)request.getParameter("shipCountry"));
         order.setShipToFirstname((String)request.getParameter("shipFirstName"));
         order.setShipToLastname((String)request.getParameter("shipLastName"));
+
+        Cart cart = (Cart) (request.getSession().getAttribute("cart"));
+
+        List<CartItem> cartItems = new ArrayList<CartItem>();
+        for (CartItem cartItem:cart.getCartItemList()
+        ) {
+            cartItems.add(cartItem);
+        }
+        //这里如果不深拷贝的话会导致清空购物车时将订单内容一并清空，因此手动实现一下深拷贝
+
+        order.setCartItemList(cartItems);
+        model.addAttribute("order",order);
         orderService.insertOrder(order);
+        cart.clear();//清空购物车
         return "order/view_order";
     }
     @GetMapping("orderLists")
@@ -134,10 +162,14 @@ public class OrderController {
     @GetMapping("viewOrder")
     public String viewOrder(HttpServletRequest request,Model model)
     {
-        Order order = orderService.getOrder(Integer.parseInt(request.getParameter("orderId")));
-        request.getSession().setAttribute("order",order);
-//        model.addAttribute("order",order); //这里不知道为啥用model不行了
-        System.out.println(((Order)(request.getSession().getAttribute("order"))).getOrderId());
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
+        Order order = orderService.getOrder(orderId);   //从数据库获得订单
+        HttpSession session0 = request.getSession();
+//        order.setCartItemList(orderService.getItemListById(orderId));   //从数据库获得订单内容
+        model.addAttribute("order",order);
+        HttpSession session = request.getSession();
+        session.setAttribute("order",order);
+        System.out.println(session.getAttribute("order"));
         return "order/view_order";
     }
 }

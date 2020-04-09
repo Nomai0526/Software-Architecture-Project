@@ -11,6 +11,10 @@ public class CartItem implements Serializable {
     private boolean inStock;
     private BigDecimal total;
 
+    public String getItemId(){return this.getItem().getItemId();}
+
+    public BigDecimal getListPrice(){return this.getItem().getListPrice();}
+
     public boolean isInStock() {
         return inStock;
     }
