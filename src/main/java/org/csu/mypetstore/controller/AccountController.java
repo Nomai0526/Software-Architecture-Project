@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +37,10 @@ public class AccountController {
 
     @PostMapping("signon")
     public String signon(String username, String password, Model model, HttpServletRequest request){
-        Account loginAccount = accountService.getAccount(username,password);
+
+        String md5Password = DigestUtils.md5DigestAsHex(password.getBytes());
+
+        Account loginAccount = accountService.getAccount(username,md5Password);
 
         if(!verificationCodeService.check(request.getSession(),request.getParameter("checkCode")))
         return "account/signon";
@@ -64,9 +68,10 @@ public class AccountController {
     @PostMapping("register")
     public String register(String userId,String password,String firstName,String lastName,String email,String phone,String addr1,String addr2,String city,String state,String zip,String country,Model model)
     {
+        String md5Password = DigestUtils.md5DigestAsHex(password.getBytes());
         Account account = new Account();
         account.setUsername(userId);
-        account.setPassword(password);
+        account.setPassword(md5Password);
         account.setFirstName(firstName);
         account.setLastName(lastName);
         account.setEmail(email);
@@ -102,9 +107,10 @@ public class AccountController {
     @PostMapping("editAccount")
     public String editAccountString (String userId,String password,String firstName,String lastName,String email,String phone,String addr1,String addr2,String city,String state,String zip,String country,Model model)
     {
+        String md5Password = DigestUtils.md5DigestAsHex(password.getBytes());
         Account account = new Account();
         account.setUsername(userId);
-        account.setPassword(password);
+        account.setPassword(md5Password);
         account.setFirstName(firstName);
         account.setLastName(lastName);
         account.setEmail(email);

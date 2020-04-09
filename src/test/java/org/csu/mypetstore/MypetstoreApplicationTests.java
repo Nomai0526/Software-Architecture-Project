@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.DigestUtils;
 
 @SpringBootTest
 @MapperScan("org.csu.mypetstore.persistence")
@@ -24,7 +25,6 @@ class MypetstoreApplicationTests {
     @Test
     void testCategory()
     {
-        System.out.println(orderMapper.getItemIdByOrderId(1));
     }
 
 }
