@@ -321,3 +321,8 @@ body>#Banner {
     background-color:#ccc;
     text-align:left;
 }
+#messageVerify
+{
+    font-family: 黑体;
+    display: none;
+}

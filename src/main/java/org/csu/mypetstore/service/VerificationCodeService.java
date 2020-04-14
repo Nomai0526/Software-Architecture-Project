@@ -1,7 +1,5 @@
 package org.csu.mypetstore.service;
 
-import com.sun.deploy.net.HttpRequest;
-import com.sun.deploy.net.HttpResponse;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;

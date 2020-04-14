@@ -1,5 +1,9 @@
-package org.csu.mypetstore;
+package org.csu.mypetstore.controller;
 
+import org.json.JSONObject;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import com.aliyuncs.CommonRequest;
 import com.aliyuncs.CommonResponse;
 import com.aliyuncs.DefaultAcsClient;
@@ -8,31 +12,16 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
-import org.csu.mypetstore.persistence.OrderMapper;
-import org.csu.mypetstore.service.CatalogService;
-import org.csu.mypetstore.service.OrderService;
-import org.json.JSONObject;
-import org.junit.jupiter.api.Test;
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.util.DigestUtils;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-@SpringBootTest
-@MapperScan("org.csu.mypetstore.persistence")
-class MypetstoreApplicationTests {
 
-    @Autowired
-    CatalogService catalogService;
-    @Autowired
-    OrderMapper orderMapper;
+@Controller
+@RequestMapping("SMS/")
+public class SMSController {
 
-    @Test
-    void contextLoads() {
-    }
-
-    @Test
-    void testCategory()
+    @GetMapping("getSMS")
+    @ResponseBody
+    public String getSMS()
     {
         String Code = Integer.toString((int)(Math.random()*10000));  //生成四位随机数
         JSONObject msg = new JSONObject();
@@ -64,7 +53,6 @@ class MypetstoreApplicationTests {
         } catch (ClientException e) {
             e.printStackTrace();
         }
-
+        return Code;
     }
-
 }

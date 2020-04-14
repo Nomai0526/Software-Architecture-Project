@@ -1,6 +1,5 @@
 package org.csu.mypetstore.controller;
 
-import com.sun.deploy.net.HttpResponse;
 import org.csu.mypetstore.service.VerificationCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

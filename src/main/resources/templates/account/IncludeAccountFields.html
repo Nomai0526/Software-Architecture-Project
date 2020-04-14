@@ -4,6 +4,57 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="StyleSheet" href="../css/jpetstore.css" type="text/css" media="screen"/>
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script>
+    $(document).ready(function () {
+
+        var code;
+        $("#register").attr("disabled",true);
+        $("#register").css("background-color","grey");
+        $("#sendMessage").click
+        (
+            function() {
+                $.get("/SMS/getSMS",{},function (responseText) {
+                    code = responseText;
+                    console.log(code);  //发送请求并且获得返回数据
+                });
+                var  timesRun = 60; //倒计时
+                var interval = setInterval(function () {
+                    $("#sendMessage").attr("disabled",true);
+                    $("#sendMessage").html("sendMessage("+timesRun+"s)");
+                    if(timesRun==0)
+                    {
+                        $("#sendMessage").attr("disabled",false);
+                        $("#sendMessage").html("sendMessage");
+                        clearInterval(interval);
+                    }
+                    else
+                    {
+                        console.log(timesRun);
+                        timesRun-=1;
+                        $("#sendMessage").html("sendMessage("+timesRun+"s)");
+                    }
+                },1000)
+            }
+        )
+        $("#verify").click(
+            function () {
+                $("#messageVerify").css("display","inline");
+                if($("#phoneVerify").val()==code)
+                {
+                    $("#register").attr("disabled",false);
+                    $("#register").css("background-color","#005e21");
+                    $("#messageVerify").html("√");
+                    $("#messageVerify").css("color","green");
+                }
+                else {
+                    $("#messageVerify").html("×");
+                    $("#messageVerify").css("color","red");
+                }
+            }
+        )
+    })
+    </script>
 </head>
 
 <div th:fragment="div">
@@ -25,6 +76,12 @@
         <tr>
             <td>Phone*:</td>
             <td><input type="text" name="phone" required="required" /></td>
+        </tr>
+        <tr>
+            <td><button type="button" id="sendMessage">Send Message</button></td>
+            <td><input type="text" name="phoneVerify" id="phoneVerify" required="required" />
+                <button id="verify" type="button">Verify</button>
+                <span id="messageVerify">√</span></td>
         </tr>
         <tr>
             <td>Address 1*:</td>
@@ -51,7 +108,7 @@
             <td><input type="text" name="country" required="required" /></td>
         </tr>
     </table>
-<!--暂时取消掉的偏好功能-->
+<!--暂时取消掉的功能-->
 <!--    <h3>Profile Information</h3>-->
 
 <!--    <table>-->

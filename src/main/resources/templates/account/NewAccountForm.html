@@ -30,23 +30,11 @@
                     <td><input name="repeatedPassword" type="password" required="required"></td>
                 </tr>
             </table>
-
-            //暂时取消掉的验证密码和验证码功能
-            <!--        <c:if test="${param.failure !=null}">-->
-            <!--            <div style="color:#fe0000">Two passwords must be same</div>-->
-            <!--        </c:if>-->
-            <!--        <%@ include file="IncludeAccountFields.jsp" %>-->
             <div th:replace="account/IncludeAccountFields"></div>
             <div style="color:#fe0000">Fields marked with * are required</div>
             <span id="span"></span>
-<!--            VerificationCode:<input type="text" name="checkCode" id="checkcode"/>-->
-<!--            <img src="verificationCode" alt="VerificationCode" id="image"/>-->
-<!--            <a href="register"><label>Another One</label></a><br>-->
-            <!--        <c:if test="${param.verifyFailure!=null}">-->
-            <!--            <div style="color:#fe0000">Verification code error</div>-->
-            <!--        </c:if>-->
             <br>
-            <input type="submit" name="register" value="Register"/><br/>
+            <input type="submit" name="register" id="register" value="Register"/><br/>
         </form>
     </div>
 </div>
