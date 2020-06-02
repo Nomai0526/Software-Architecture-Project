@@ -24,6 +24,7 @@ public class SMSController {
     public String getSMS()
     {
         String Code = Integer.toString((int)(Math.random()*10000));  //生成四位随机数
+        //123
 //        JSONObject msg = new JSONObject();
 //        try {
 //            msg.put("code",Code);
