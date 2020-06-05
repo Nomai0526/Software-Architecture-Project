@@ -105,5 +105,16 @@
             (PASSWORD,USERNAME)
         VALUES (#{password}, #{username})
     </insert>
+
+    <select id="getAccounts" resultType="Account">
+        SELECT * FROM ACCOUNT
+    </select>
+
+    <delete id="deleteAccount" parameterType="Account">
+        DELETE FROM ACCOUNT
+        WHERE USERID = #{username};
+        DELETE FROM SIGNON
+        WHERE USERNAME = #{username}
+    </delete>
     
 </mapper>

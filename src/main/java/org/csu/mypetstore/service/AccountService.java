@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
+import java.util.List;
+
 @Service
 public class AccountService {
 
@@ -24,6 +26,13 @@ public class AccountService {
         return accountMapper.getAccountByUsernameAndPassword(account);
     }
 
+    public List<Account> getAccounts(){
+        return accountMapper.getAccounts();
+    }
+
+    public void deleteAccount(Account account){
+        accountMapper.deleteAccount(account);
+    }
     /*
         声明式事务处理
      */

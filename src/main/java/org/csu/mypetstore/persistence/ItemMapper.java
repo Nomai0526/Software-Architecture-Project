@@ -1,6 +1,7 @@
 package org.csu.mypetstore.persistence;
 
 import org.csu.mypetstore.domain.Item;
+import org.csu.mypetstore.domain.Product;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,5 +21,13 @@ public interface ItemMapper {
     List<Item> getItemListByProduct(String productId);
 
     Item getItem(String itemId);
+
+    List<Item> getItemList();
+
+    void insertItem(Item item);
+
+    void deleteItem(Item item);
+
+    void updateItem(Item item);
 
 }

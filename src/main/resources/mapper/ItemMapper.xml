@@ -26,6 +26,26 @@
         AND I.PRODUCTID = #{value}
     </select>
 
+    <select id="getItemList" resultType="Item">
+        SELECT
+            I.ITEMID,
+            LISTPRICE,
+            UNITCOST,
+            SUPPLIER AS supplierId,
+            I.PRODUCTID AS "product.productId",
+            NAME AS "product.name",
+            DESCN AS "product.description",
+            CATEGORY AS "product.categoryId",
+            STATUS,
+            ATTR1 AS attribute1,
+            ATTR2 AS attribute2,
+            ATTR3 AS attribute3,
+            ATTR4 AS attribute4,
+            ATTR5 AS attribute5
+        FROM ITEM I, PRODUCT P
+        WHERE P.PRODUCTID = I.PRODUCTID
+    </select>
+
     <select id="getItem" parameterType="string" resultType="Item">
         SELECT
             I.ITEMID,
@@ -67,5 +87,62 @@
         WHERE ITEMID = #{itemId}
     </update>
 
+    <insert id="insertItem" parameterType="Item">
+        INSERT INTO ITEM
+            (ITEMID,
+            LISTPRICE,
+            UNITCOST,
+            SUPPLIER ,
+            PRODUCTID ,
+            STATUS,
+            ATTR1,
+            ATTR2,
+            ATTR3,
+            ATTR4,
+            ATTR5,
+            INSTOCK)
+            VALUES
+            (#{itemId},
+            #{listPrice},
+            #{unitCost},
+            #{supplierId},
+            #{product.productId},
+            #{status},
+            #{attribute1},
+            #{attribute2},
+            #{attribute3},
+            #{attribute4},
+            #{attribute5},
+            0);
+            INSERT INTO INVENTORY
+            (ITEMID,QTY)
+            VALUES
+            (#{itemId},
+            #{quantity})
+    </insert>
+    <delete id="deleteItem" parameterType="Item">
+        DELETE FROM ITEM
+        WHERE ITEMID = #{itemId};
+        DELETE FROM INVENTORY
+        WHERE ITEMID = #{itemId};
+    </delete>
+    <update id="updateItem" parameterType="Item">
+        UPDATE ITEM
+        SET LISTPRICE = #{listPrice},
+            UNITCOST = #{unitCost},
+            SUPPLIER = #{supplierId},
+            PRODUCTID = #{product.productId},
+            STATUS = #{status},
+            ATTR1 = #{attribute1},
+            ATTR2 = #{attribute2},
+            ATTR3 = #{attribute3},
+            ATTR4 = #{attribute4},
+            ATTR5 = #{attribute5},
+            INSTOCK = 0
+        WHERE ITEMID = #{itemId};
+        UPDATE INVENTORY
+        SET QTY = #{quantity}
+        WHERE ITEMID = #{itemId}
+    </update>
 
 </mapper>

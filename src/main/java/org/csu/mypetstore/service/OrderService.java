@@ -61,9 +61,21 @@ public class OrderService {
         return orderMapper.getItemListById(id);
     }
 
+    public List<Order> getOrders(){
+        return orderMapper.getOrders();
+    }
+    public void deleteOrder(Order order){
+        orderMapper.deleteOrderItems(order.getOrderId());
+        orderMapper.deleteOrder(order);
+    }
+    public void updateOrder(Order order){
+        orderMapper.updateOrder(order);
+    }
+
 //    public void
 //
 //    public int getNextId(String name) {
 //        return orderDao.getNextId(name);
 //    }
+
 }

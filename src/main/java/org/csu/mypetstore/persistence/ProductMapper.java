@@ -9,7 +9,15 @@ import java.util.List;
 public interface ProductMapper {
     List<Product> getProductListByCategory(String categoryId);
 
+    List<Product> getProductList();
+
     Product getProduct(String productId);
 
     List<Product> searchProductList(String keywords);
+
+    void insertProduct(Product product);
+
+    void deleteProduct(Product product);
+
+    void updateProduct(Product product);
 }

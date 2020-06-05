@@ -8,5 +8,12 @@ import java.util.List;
 @Repository
 public interface CategoryMapper {
     List<Category> getCategoryList();
+
     Category getCategory(String categoryId);
+
+    void addCategory(Category category);
+
+    void deleteCategory(Category category);
+
+    void updateCategory(Category category);
 }

@@ -11,25 +11,28 @@
     <insert id="insertOrderItems">
         INSERT INTO ORDERITEMS
         (
-            ORDERID,
-            ITEMID,
-            QUANTITY,
-            PRICE,
-            TOTALPRICE
+        ORDERID,
+        ITEMID,
+        QUANTITY,
+        PRICE,
+        TOTALPRICE
         )
         VALUES
         <foreach collection="list" item="item" separator=",">
-        (
+            (
             #{orderId},
             #{item.itemId},
             #{item.quantity},
             #{item.listPrice},
             #{item.total}
-        )
+            )
         </foreach>
     </insert>
     <select id="getOrder" parameterType="int" resultType="Order">
         SELECT * FROM ORDERS WHERE ORDERID = #{orderId}
+    </select>
+    <select id="getOrders"  resultType="Order">
+        SELECT * FROM ORDERS
     </select>
     <select id="getOrdersByUsername" parameterType="String" resultType="Order">
         SELECT * FROM ORDERS WHERE USERID = #{username}
@@ -40,4 +43,38 @@
     <select id="getItemIdByOrderId" parameterType="int" resultType="String">
         SELECT ITEMID FROM ORDERITEMS WHERE ORDERID = #{orderId}
     </select>
+    <delete id="deleteOrder" parameterType="order">
+        DELETE FROM ORDERS WHERE ORDERID = #{orderId}
+    </delete>
+    <delete id="deleteOrderItems" parameterType="int">
+        DELETE FROM ORDERITEMS WHERE ORDERID = #{orderId}
+    </delete>
+    <update id="updateOrder" parameterType="order">
+        UPDATE ORDERS
+        SET USERID = #{userId},
+        ORDERDATE = #{orderDate},
+        SHIPADDR1 = #{shipAddr1},
+        SHIPADDR2 = #{shipAddr2},
+        SHIPCITY = #{shipCity},
+        SHIPSTATE = #{shipState},
+        SHIPZIP = #{shipZip},
+        SHIPCOUNTRY = #{shipCountry},
+        BILLADDR1 = #{billAddr1},
+        BILLADDR2 = #{billAddr1},
+        BILLCITY = #{billCity},
+        BILLSTATE = #{billState},
+        BILLZIP = #{billZip},
+        BILLCOUNTRY = #{billCountry},
+        COURIER = #{courier},
+        TOTALPRICE = #{totalPrice},
+        BILLTOFIRSTNAME = #{billToFirstName},
+        BILLTOLASTNAME = #{billToLastname},
+        SHIPTOFIRSTNAME = #{shipToFirstname},
+        SHIPTOLASTNAME = #{shipToLastname},
+        CREDITCARD = #{creditCard},
+        EXPRDATE = #{exprdate},
+        CARDTYPE = #{cardType},
+        LOCALE = #{locale},
+        WHERE ORDERID = #{orderId}
+    </update>
 </mapper>

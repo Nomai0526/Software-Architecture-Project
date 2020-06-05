@@ -17,4 +17,19 @@
         DESCN AS description
         FROM CATEGORY
     </select>
+    <insert id="addCategory" parameterType="Category">
+        INSERT INTO CATEGORY
+            (CATID, NAME, DESCN)
+        VALUES(
+            #{categoryId}, #{name}, #{description})
+    </insert>
+    <delete id="deleteCategory" parameterType="Category">
+        DELETE FROM CATEGORY
+        WHERE CATID = #{categoryId} AND NAME = #{name} AND DESCN = #{description}
+    </delete>
+    <update id="updateCategory" parameterType="Category">
+        UPDATE CATEGORY
+        SET NAME = #{name} ,DESCN = #{description}
+        WHERE CATID = #{categoryId}
+    </update>
 </mapper>
