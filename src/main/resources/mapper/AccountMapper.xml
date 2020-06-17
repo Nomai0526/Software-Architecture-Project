@@ -107,7 +107,20 @@
     </insert>
 
     <select id="getAccounts" resultType="Account">
-        SELECT * FROM ACCOUNT
+        SELECT
+        USERID AS username,
+        EMAIL,
+        FIRSTNAME,
+        LASTNAME,
+        STATUS,
+        ADDR1 as address1,
+        ADDR2 as address2,
+        CITY,
+        STATE,
+        ZIP,
+        COUNTRY,
+        PHONE
+        FROM ACCOUNT
     </select>
 
     <delete id="deleteAccount" parameterType="Account">
@@ -116,5 +129,11 @@
         DELETE FROM SIGNON
         WHERE USERNAME = #{username}
     </delete>
+
+    <update id="resetPwd" parameterType="Account">
+        UPDATE SIGNON
+        SET PASSWORD = '000000'
+        WHERE USERNAME = #{username}
+    </update>
     
 </mapper>

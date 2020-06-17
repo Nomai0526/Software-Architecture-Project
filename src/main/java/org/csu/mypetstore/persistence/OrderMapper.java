@@ -1,5 +1,6 @@
 package org.csu.mypetstore.persistence;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.apache.ibatis.annotations.Param;
 import org.csu.mypetstore.domain.CartItem;
 import org.csu.mypetstore.domain.Order;
@@ -22,6 +23,8 @@ public interface OrderMapper {
     List<String> getItemIdByOrderId(int orderId);
 
     List<Order> getOrders();
+
+    void insertOrderStatus(Order order);
 
     void updateOrder(Order order);
 

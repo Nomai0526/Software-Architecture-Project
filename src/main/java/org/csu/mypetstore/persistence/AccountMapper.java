@@ -26,5 +26,7 @@ public interface AccountMapper {
 
     List<Account> getAccounts();
 
+    void resetPwd(Account account);
+
     void deleteAccount(Account account);
 }

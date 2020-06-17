@@ -25,7 +25,7 @@
     </insert>
     <delete id="deleteCategory" parameterType="Category">
         DELETE FROM CATEGORY
-        WHERE CATID = #{categoryId} AND NAME = #{name} AND DESCN = #{description}
+        WHERE CATID = #{categoryId} AND NAME = #{name}
     </delete>
     <update id="updateCategory" parameterType="Category">
         UPDATE CATEGORY

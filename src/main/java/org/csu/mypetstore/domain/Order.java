@@ -1,5 +1,7 @@
 package org.csu.mypetstore.domain;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Iterator;
@@ -8,6 +10,7 @@ import java.util.List;
 public class Order {
     private int orderId;
     private String userId;
+    @JSONField (format="yyyy-MM-dd HH:mm:ss")
     private Date orderDate;
     private String shipAddr1;
     private String shipAddr2;
@@ -31,6 +34,7 @@ public class Order {
     private String exprdate;
     private String cardType;
     private String locale;
+    private int status;
     private List<CartItem> cartItemList;
 
     public List<CartItem> getCartItemList() {
@@ -38,7 +42,10 @@ public class Order {
     }
 
     public Iterator<CartItem> getCartItems() {
-        return cartItemList.iterator();
+        if (cartItemList != null) {
+            return cartItemList.iterator();
+        }
+        else return null;
     }
 
     public void setCartItemList(List<CartItem> cartItemList) {
@@ -245,4 +252,11 @@ public class Order {
         this.locale = locale;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 }

@@ -52,7 +52,7 @@
     </insert>
     <delete id="deleteProduct" parameterType="Product">
         DELETE FROM PRODUCT
-        WHERE PRODUCTID = #{productId} AND NAME = #{name} AND DESCN = #{description} AND CATEGORY = #{categoryId}
+        WHERE PRODUCTID = #{productId}
     </delete>
     <update id="updateProduct" parameterType="Product">
         UPDATE PRODUCT

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/backend/")
+@RequestMapping("/api/backend/")
 public class BackendController {
 
     @Autowired
@@ -35,21 +35,22 @@ public class BackendController {
 
     @PostMapping("categories")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void addCategories(Category category) {
+    public void addCategories(@RequestBody Category category) {
         catalogService.addCategory(category);
     }
     //添加category
 
     @DeleteMapping("categories")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void deleteCategories(Category category) {
+    public void deleteCategories(@RequestBody Category category) {
+        System.out.println(category.getCategoryId());
         catalogService.deleteCategory(category);
     }
     //删除category
 
     @PatchMapping("categories")
     @ResponseStatus(value = HttpStatus.OK)
-    public void patchCategories(Category category) {
+    public void patchCategories(@RequestBody Category category) {
         catalogService.updateCategory(category);
     }
     //修改categoty
@@ -66,21 +67,21 @@ public class BackendController {
 
     @PostMapping("products")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void addProduct(Product product) {
+    public void addProduct(@RequestBody Product product) {
         catalogService.insertProduct(product);
     }
     //添加Product
 
     @DeleteMapping("products")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void deleteProduct(Product product) {
+    public void deleteProduct(@RequestBody Product product) {
         catalogService.deleteProduct(product);
     }
     //删除Product
 
     @PatchMapping("products")
     @ResponseStatus(value = HttpStatus.OK)
-    public void patchProduct(Product product) {
+    public void patchProduct(@RequestBody Product product) {
         catalogService.updateProduct(product);
     }
     //修改Product
@@ -89,29 +90,30 @@ public class BackendController {
     @ResponseBody
     @ResponseStatus(value = HttpStatus.OK)
     public String getItems() {
-        List<Product> itemList = catalogService.getProductList();
+        List<Item> itemList = catalogService.getItemList();
         String itemJson = JSON.toJSONString(itemList);
+        System.out.println(itemJson);
         return itemJson;
     }
     //获得item列表
 
     @PostMapping("items")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void addItems(Item item) {
+    public void addItems(@RequestBody Item item) {
         catalogService.insertItem(item);
     }
     //添加item
 
     @DeleteMapping("items")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void deleteItems(Item item) {
+    public void deleteItems(@RequestBody Item item) {
         catalogService.deleteItem(item);
     }
     //删除item
 
     @PatchMapping("items")
     @ResponseStatus(value = HttpStatus.OK)
-    public void patchItems(Item item) {
+    public void patchItems(@RequestBody Item item) {
         catalogService.updateItem(item);
     }
     //修改item
@@ -124,25 +126,29 @@ public class BackendController {
         String itemJson = JSON.toJSONString(accountList);
         return itemJson;
     }
-    //获得item列表
+    //获得account列表
 
     @PostMapping("accounts")
+    @ResponseBody
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void addAccounts(Account account) { accountService.insertAccount(account);}
-    //添加items
+    public void resertPwd(@RequestBody Account account) {
+        System.out.println(account.getUsername());
+        accountService.resetPwd(account);
+    }
+    //添加account
 
     @DeleteMapping("accounts")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void deleteAccounts(Account account) {
+    public void deleteAccounts(@RequestBody Account account) {
         accountService.deleteAccount(account);
     }
-    //删除item
+    //删除account
 
     @PatchMapping("accounts")
     @ResponseStatus(value = HttpStatus.OK)
-    public void patchAccounts(Account account) {accountService.updateAccount(account);
+    public void patchAccounts(@RequestBody Account account) {accountService.updateAccount(account);
     }
-    //修改item
+    //修改account
 
     @GetMapping("orders")
     @ResponseBody
@@ -156,19 +162,19 @@ public class BackendController {
 
     @PostMapping("orders")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void addOrders(Order order) { orderService.insertOrder(order);}
+    public void addOrders(@RequestBody Order order) { orderService.insertOrder(order);}
     //添加order
 
     @DeleteMapping("orders")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void deleteOrders(Order order) {
+    public void deleteOrders(@RequestBody Order order) {
         orderService.deleteOrder(order);
     }
     //删除order
 
     @PatchMapping("orders")
     @ResponseStatus(value = HttpStatus.OK)
-    public void patchOrders(Order order) {orderService.updateOrder(order);
+    public void patchOrders(@RequestBody Order order) {orderService.updateOrder(order);
     }
     //修改order
 }

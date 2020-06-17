@@ -75,6 +75,8 @@ public class OrderController {
         order.setOrderId(23333);
         order.setUserId(((Account) session.getAttribute("account")).getUsername());
         order.setOrderDate(new Date());
+        order.setStatus(1);
+        //订单状态1表示未完成，2表示正在运输，3表示已完成
 
         order.setBillAddr1((String) request.getParameter("billAddr1"));
         order.setBillAddr2((String) request.getParameter("billAddr2"));

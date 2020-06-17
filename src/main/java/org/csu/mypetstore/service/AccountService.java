@@ -51,4 +51,7 @@ public class AccountService {
             accountMapper.updateSignon(account);
         }
     }
+    public void resetPwd(Account account){
+        accountMapper.resetPwd(account);
+    }
 }
